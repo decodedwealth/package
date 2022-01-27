@@ -1,0 +1,34 @@
+name: Package Release
+
+on:
+  push:
+    branches: [main]
+jobs:
+  release:
+    name: 'Release'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Setup Node'
+        uses: actions/setup-node@v2
+        with:
+          always-auth: true
+          node-version: 14.x
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@decodedwealth'
+
+      - name: 'Fetch Code'
+        uses: 'actions/checkout@v2'
+
+      - name: Fetch dependencies
+        run: yarn install
+
+      - name: Build package
+        run: yarn build
+
+      - name: Publish package
+        run: npx semantic-release
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

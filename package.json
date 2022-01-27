@@ -1,0 +1,41 @@
+{
+  "name": "@decodedwealth/package",
+  "version": "1.0.0",
+  "description": "A skeleton NPM package configured to be deployed by Github Actions to your internal Github Package Repository.",
+  "repository": "https://github.com/decodedwealth/package",
+  "license": "MIT",
+  "author": "kodewilliams <kode.a.williams@gmail.com>",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "lint": "gts lint",
+    "clean": "gts clean",
+    "build": "tsc",
+    "fix": "gts fix",
+    "pretest": "yarn build",
+    "posttest": "yarn lint",
+    "prepare": "husky install && yarn build",
+    "format:code": "prettier --write src/**/*.ts",
+    "format:package": "sort-package-json package.json",
+    "format": "run-p format:code format:package",
+    "precommit": "run-s lint build clean format"
+  },
+  "release": {
+    "branches": [
+      "main"
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^14.11.2",
+    "gts": "^3.1.0",
+    "husky": "^7.0.4",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.5.1",
+    "semantic-release": "^19.0.2",
+    "sort-package-json": "^1.53.1",
+    "typescript": "^4.0.3"
+  }
+}
